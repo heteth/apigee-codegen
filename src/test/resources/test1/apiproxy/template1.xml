@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="${name}">
+    <Basepaths>${basePaths}</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>${createdAt}</CreatedAt>
+    <CreatedBy>${createdBy}</CreatedBy>
+    <Description>${util.escapeXml(description)}</Description>
+    <DisplayName>${displayName}</DisplayName>
+    <ManifestVersion>${manifestVersion}</ManifestVersion>
+    <Policies>
+    <#list policies as policy>
+        <Policy>${policy.name}</Policy>
+    </#list>
+    </Policies>
+    <#list proxies as proxy>
+    <ProxyEndpoints>
+        <ProxyEndpoint>${proxy.name}</ProxyEndpoint>
+    </ProxyEndpoints>
+    </#list>
+    <Resources>
+    <#list resources as group, list>
+    <#list list as resource>
+        <Resource>${group}://${resource.name}.${resource.ext}</Resource>
+    </#list>
+    </#list>
+    </Resources>
+    <Spec>${spec}</Spec>
+    <TargetServers>
+    <#list targetServers as targetServer>
+    </#list>
+    </TargetServers>
+    <TargetEndpoints>
+    <#list targets as target>
+        <TargetEndpoint>${target.name}</TargetEndpoint>
+    </#list>
+    </TargetEndpoints>
+</APIProxy>

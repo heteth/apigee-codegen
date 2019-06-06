@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="${name}">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <#list preFlow.request.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Request>
+        <Response>
+            <#list preFlow.response.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Response>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request>
+            <#list postFlow.request.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+        </#list>
+        </Request>
+        <Response>
+            <#list postFlow.response.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Response>
+    </PostFlow>
+    <Flows>
+        <#list flows as flow>
+        <Flow name="${flow.path}">
+            <Description>${util.escapeXml(flow.operation.description)}</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "${flow.path}") and (request.verb = "${flow.verb}")</Condition>
+        </Flow>
+        </#list>
+    </Flows>
+    <HTTPProxyConnection>
+        <BasePath>${basePath}</BasePath>
+        <Properties/>
+        <#list virtualHosts as virtualHost>
+        <VirtualHost>${virtualHost}</VirtualHost>
+        </#list>
+    </HTTPProxyConnection>
+    <#list routeRules as routeRule>
+    <RouteRule name="${routeRule.name}">
+        <Condition>${routeRule.condition}</Condition>
+        <TargetEndpoint>${routeRule.targetEndpoint}</TargetEndpoint>
+    </RouteRule>
+    </#list>
+</ProxyEndpoint>
