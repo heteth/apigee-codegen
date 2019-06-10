@@ -6,27 +6,27 @@ import java.nio.file.Path
 import static ratpack.groovy.Groovy.ratpack
 
 ratpack {
+    serverConfig {
+        //port 6000
+    }
+
     handlers {
-        get {
+        post {
             def cfg = new Configuration(Configuration.VERSION_2_3_28)
 
-            cfg.directoryForTemplateLoading = "../../../src/test/resources/test1" as File
+            println(("." as File).absolutePath)
+
+            cfg.directoryForTemplateLoading = "../../../src/main/resources/templates/test1" as File
             cfg.logTemplateExceptions = false
             cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
-            def options = [
-                    template: "template1",
-                    name: "Swagger-Petstore",
-                    displayName: "Proxy1",
-                    basePath: "/swagger-petstore/v1",
-                    swaggerPath:
-                    //("./src/test/resources/test1/petstore-swagger.yaml" as File).toURI().toString()
-                            "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml"
-            ]
+            parse(Map.class).then { options ->
+                println "options = $options"
 
-            new B1().run cfg, options
+                new B1().run cfg, options
 
-            render(Path.of(options.out))
+                render(Path.of(options.out))
+            }
         }
         get(":name") {
             render "Hello $pathTokens.name!"

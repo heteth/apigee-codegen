@@ -10,7 +10,7 @@ class B1Test {
         cfg.logTemplateExceptions = false
         cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
-        def name = "Swagger-PetstoreA"
+        def name = "Swagger-PetstoreB"
 
         def options = [
                 org: "hamedhamedhamedhamed-eval",
@@ -24,11 +24,11 @@ class B1Test {
                         "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml",
                 approvalType: "auto",//mandatory
                 target: [
-                        servers: [
-                                "$name": ["host": "dev", "port": 8080],
-                                "$name-preprod": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
-                                "$name-prod": ["host": "prod-server", "port": 443, sSLInfo: [enabled: true]],
-                        ],
+                        /*servers: [
+                                [name: "$name", "host": "dev", "port": 8080],
+                                [name: "$name-preprod", "host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                [name: "$name-prod", "host": "prod-server", "port": 443, sSLInfo: [enabled: true]],
+                        ],*/
                 ],
                 //extensions: [:]
         ]
@@ -48,11 +48,10 @@ class B1Test {
                 displayName: "Display Name",
                 swaggerPath: "http://a.com/b.yaml",
                 target: [
-                        name: "pxy-ts",
                         servers: [
-                                "petstore": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
-                                "petstore-preprod": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
-                                "petstore-prod": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                [name: "petstore", "host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                [name: "petstore-preprod", "host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                [name: "petstore-prod", "host": "dev", "port": 443, sslInfo: [enabled: true]],
                         ],
                         path: "/abc",
                         sslInfo: [

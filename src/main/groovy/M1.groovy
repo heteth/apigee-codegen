@@ -33,8 +33,7 @@ class M1 {
         defaultProxy.virtualHosts = options.virtualHosts
 
         model.apiProxy = apiProxy
-        model.products = []
-        model.targetServers = []
+
         model.kvms = []
         model.sharedFlows = []
 
@@ -51,10 +50,10 @@ class M1 {
                 quotaTimeUnit: options.extensions?."quota-limit"?.quotaTimeUnit,
         ]
 
-        model.products << product
+        model.products = [product]
 
         model.targetServers  = options.target.servers.collect { name, value ->
-            value + [name: name, sSLInfo: value.sSLInfo ?: value.sslInfo, sslInfo: null]
+            value + [sSLInfo: value.sSLInfo ?: value.sslInfo, sslInfo: null]
         }
     }
 }
