@@ -6,9 +6,6 @@ class G1 {
     def generate(path, templateName, fileName, it, model) {
         def t = cfg.getTemplate("$path/$templateName")
 
-        it.model = model
-        it.util = new Util()
-
         def file = new File("$outputPath/${model.name}/$path/$fileName")
 
         println "file = $file.absolutePath"
@@ -16,7 +13,7 @@ class G1 {
         file.parentFile.mkdirs()
 
         file.withOutputStream {
-            out -> t.process(it, new OutputStreamWriter(out))
+            out -> t.process(it + [model: model, util: new Util()], new OutputStreamWriter(out))
         }
     }
 }

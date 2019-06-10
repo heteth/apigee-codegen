@@ -1,5 +1,6 @@
 import freemarker.template.Configuration
 import freemarker.template.TemplateExceptionHandler
+import groovy.json.JsonOutput
 
 class B1Test {
     static void main(String[] args) {
@@ -9,17 +10,30 @@ class B1Test {
         cfg.logTemplateExceptions = false
         cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
+        def name = "Swagger-PetstoreA"
+
         def options = [
+                org: "hamedhamedhamedhamed-eval",
+                environment: "prod",
                 template: "template1",
-                name: "Swagger-Petstore",
+                name: "$name",
                 displayName: "Proxy1",
                 basePath: "/swagger-petstore/v1",
                 swaggerPath:
                         //("./src/test/resources/test1/petstore-swagger.yaml" as File).toURI().toString()
-                        "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml"
+                        "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml",
+                approvalType: "auto",//mandatory
+                target: [
+                        servers: [
+                                "$name": ["host": "dev", "port": 8080],
+                                "$name-preprod": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                "$name-prod": ["host": "prod-server", "port": 443, sSLInfo: [enabled: true]],
+                        ],
+                ],
+                //extensions: [:]
         ]
 
-        println "opt() = ${groovy.json.JsonOutput.toJson(opt())}"
+        println "opt() = ${JsonOutput.toJson(opt())}"
 
         new B1().run cfg, options
     }
@@ -33,15 +47,15 @@ class B1Test {
                 name: "pxy",//used for proxy and product
                 displayName: "Display Name",
                 swaggerPath: "http://a.com/b.yaml",
-                targetServer: [
+                target: [
                         name: "pxy-ts",
-                        server: [
-                                "dev": "dev:1234",
-                                "pre-prod": "pre-prod:2345",
-                                "prod": "prod:3456"
+                        servers: [
+                                "petstore": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                "petstore-preprod": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
+                                "petstore-prod": ["host": "dev", "port": 443, sslInfo: [enabled: true]],
                         ],
                         path: "/abc",
-                        ssl: [
+                        sslInfo: [
                                 enabled: true,
                                 clientAuthEnabled: true,
                                 keyStoreRef: "keystoreref",

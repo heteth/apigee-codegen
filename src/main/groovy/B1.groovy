@@ -1,3 +1,9 @@
+import groovy.json.JsonGenerator
+import groovyx.net.http.ContentType
+import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.Method
+import org.apache.http.entity.mime.MultipartEntityBuilder
+
 import java.nio.file.Files
 
 class B1 {
@@ -32,13 +38,47 @@ class B1 {
      Copy Shared Flows (sync) <- based on security model, schema validation,
         error-handling?, spike-arrest?, quota-limit?, x-request-id-header?, statistics-collector
         */
-        options.out = "$out/${model.name}.zip"
+        options.out = "$out/${model.apiProxy.name}.zip"
 /*
         createProxy()
-        createProduct()
-        createTargetServers()
-        createKVMs()
+        --createProduct()
+        --createTargetServers()
+        not needed createKVMs()
         copySharedFlows()
- */
+        */
+
+        def g = new JsonGenerator.Options().excludeNulls().build()
+
+        //todo get from options
+        def headers = ["Authorization": "Basic ${"hamedhamedhamedhamed@yahoo.com:Goodday!23".bytes.encodeBase64()}"]
+
+        new HTTPBuilder("https://api.enterprise.apigee.com/v1/o/${options.org}/apis?action=import&name=${model.apiProxy.name}").with {
+            setHeaders headers
+            def builder = MultipartEntityBuilder.create()
+            builder.addBinaryBody"file", new File(options.out)
+            request(Method.POST) {
+                request.entity = builder.build()
+            }
+        }
+
+        model.products.each { product ->
+            println "product = ${g.toJson(product)}"
+            new HTTPBuilder("https://api.enterprise.apigee.com/v1/o/${options.org}/apiproducts").with {
+                setHeaders headers
+                request(Method.POST, ContentType.JSON) {
+                    body = g.toJson(product)
+                }
+            }
+        }
+
+        model.targetServers.each { targetServer ->
+            println "targetServer = ${g.toJson(targetServer)}"
+            new HTTPBuilder("https://api.enterprise.apigee.com/v1/o/${options.org}/environments/${options.environment}/targetservers").with {
+                setHeaders headers
+                request(Method.POST, ContentType.JSON) {
+                    body = g.toJson(targetServer)
+                }
+            }
+        }
     }
 }

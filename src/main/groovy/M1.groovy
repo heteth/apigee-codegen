@@ -37,5 +37,24 @@ class M1 {
         model.targetServers = []
         model.kvms = []
         model.sharedFlows = []
+
+        def product = [
+                name: options.name,
+                displayName: options.name,
+                apiResources: [],
+                approvalType: options.approvalType,
+                attributes: [["name": "access", "value": "public"]],
+                environments: [options.environment],
+                proxies: [options.name],
+                quota: options.extensions?."quota-limit"?.quota,
+                quotaInterval: options.extensions?."quota-limit"?.quotaInterval,
+                quotaTimeUnit: options.extensions?."quota-limit"?.quotaTimeUnit,
+        ]
+
+        model.products << product
+
+        model.targetServers  = options.target.servers.collect { name, value ->
+            value + [name: name, sSLInfo: value.sSLInfo ?: value.sslInfo, sslInfo: null]
+        }
     }
 }
