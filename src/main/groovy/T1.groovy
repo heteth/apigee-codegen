@@ -68,7 +68,7 @@ class T1 {
     }
 
     def generateTarget(path, target, model) {
-        generate(path, "${target.name}.xml", "${target.name}.xml", target, model)
+        generate(path, "${target.templateName ?: target.name}.xml", "${target.name}.xml", target, model)
     }
 
     def generateApiProxy(model) {

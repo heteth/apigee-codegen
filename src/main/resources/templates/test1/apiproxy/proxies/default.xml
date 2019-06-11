@@ -40,7 +40,7 @@
             <Description>${util.escapeXml(flow.operation.description)}</Description>
             <Request/>
             <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "${flow.path}") and (request.verb = "${flow.verb}")</Condition>
+            <Condition>(proxy.pathsuffix MatchesPath "${flow.path}") and (request.verb = "${util.toUpperCase(flow.verb)}")</Condition>
         </Flow>
         </#list>
     </Flows>
@@ -51,10 +51,12 @@
         <VirtualHost>${virtualHost}</VirtualHost>
         </#list>
     </HTTPProxyConnection>
-    <#list routeRules as routeRule>
-    <RouteRule name="${routeRule.name}">
-        <Condition>${routeRule.condition}</Condition>
-        <TargetEndpoint>${routeRule.targetEndpoint}</TargetEndpoint>
+    <#list routes as route>
+    <RouteRule name="${route.name}">
+        <#if route.condition != null>
+        <Condition>${route.condition}</Condition></RouteRule>
+        </#if>
+        <TargetEndpoint>${route.target}</TargetEndpoint>
     </RouteRule>
     </#list>
 </ProxyEndpoint>

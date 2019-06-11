@@ -6,30 +6,32 @@ class B1Test {
     static void main(String[] args) {
         def cfg = new Configuration(Configuration.VERSION_2_3_28)
 
-        cfg.directoryForTemplateLoading = "./src/test/resources/test1" as File
+        cfg.directoryForTemplateLoading = "./src/main/resources/templates/test1" as File
         cfg.logTemplateExceptions = false
         cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
-        def name = "Swagger-PetstoreB"
+        def name = "Swagger-Petstore-N"
 
         def options = [
                 org: "hamedhamedhamedhamed-eval",
                 environment: "prod",
+                virtualHosts: ["default", "secure"],
                 template: "template1",
                 name: "$name",
                 displayName: "Proxy1",
-                basePath: "/swagger-petstore/v1",
+                basePath: "/${name.toLowerCase()}/v1",
                 swaggerPath:
                         //("./src/test/resources/test1/petstore-swagger.yaml" as File).toURI().toString()
                         "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml",
                 approvalType: "auto",//mandatory
-                target: [
+                target: [baseUrl: "https://petstore.swagger.io/v2"]
+                //target: [
                         /*servers: [
                                 [name: "$name", "host": "dev", "port": 8080],
                                 [name: "$name-preprod", "host": "dev", "port": 443, sslInfo: [enabled: true]],
                                 [name: "$name-prod", "host": "prod-server", "port": 443, sSLInfo: [enabled: true]],
                         ],*/
-                ],
+                //],
                 //extensions: [:]
         ]
 

@@ -11,7 +11,6 @@ class M1 {
         apiProxy.proxies = []
         apiProxy.policies = []
         apiProxy.resources = [:]
-        apiProxy.targets = []
 
         def parser = new Yaml()
         def sw = parser.load new URL(options.swaggerPath).openStream()
@@ -31,6 +30,16 @@ class M1 {
 
         defaultProxy.basePath = options.basePath
         defaultProxy.virtualHosts = options.virtualHosts
+
+        def defaultTarget = [
+                templateName: options.target?.templateName,
+                name: options.target?.name ?: "default",
+                baseUrl: options.target?.baseUrl ?: "${sw.schemes[0]}://${sw.host}/${sw.basePath}"
+        ]
+
+        apiProxy.targets = [defaultTarget]
+
+        defaultProxy.routes = [[name: defaultTarget.name, target: defaultTarget.name]]
 
         model.apiProxy = apiProxy
 
@@ -52,7 +61,7 @@ class M1 {
 
         model.products = [product]
 
-        model.targetServers  = options.target.servers.collect { name, value ->
+        model.targetServers  = options.target?.servers.collect { name, value ->
             value + [sSLInfo: value.sSLInfo ?: value.sslInfo, sslInfo: null]
         }
     }

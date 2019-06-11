@@ -56,8 +56,13 @@ class B1 {
             setHeaders headers
             def builder = MultipartEntityBuilder.create()
             builder.addBinaryBody"file", new File(options.out)
-            request(Method.POST) {
+            def response = request(Method.POST) {
                 request.entity = builder.build()
+            }
+
+            new HTTPBuilder("https://api.enterprise.apigee.com/v1/o/${options.org}/environments/${options.environment}/apis/${response.name}/revisions/${response.revision}/deployments").with {
+                setHeaders headers
+                request(Method.POST) {}
             }
         }
 
