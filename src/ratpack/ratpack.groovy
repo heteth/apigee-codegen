@@ -23,7 +23,7 @@ ratpack {
             parse(Map.class).then { options ->
                 println "options = $options"
 
-                new B1().run cfg, options
+                new B1().run cfg, options + [headers: ["Authorization": header("Authorization").orElse(null)]]
 
                 render(Path.of(options.out))
             }

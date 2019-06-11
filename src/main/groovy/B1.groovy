@@ -49,9 +49,9 @@ class B1 {
 
         def g = new JsonGenerator.Options().excludeNulls().build()
 
-        //todo get from options
-        def headers = ["Authorization": "Basic ${"hamedhamedhamedhamed@yahoo.com:Goodday!23".bytes.encodeBase64()}"]
+        def headers = options.headers
 
+        //todo get from options
         new HTTPBuilder("https://api.enterprise.apigee.com/v1/o/${options.org}/apis?action=import&name=${model.apiProxy.name}").with {
             setHeaders headers
             def builder = MultipartEntityBuilder.create()

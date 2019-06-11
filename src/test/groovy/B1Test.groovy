@@ -10,7 +10,7 @@ class B1Test {
         cfg.logTemplateExceptions = false
         cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
-        def name = "Swagger-Petstore-N"
+        def name = "Swagger-Petstore-O"
 
         def options = [
                 org: "hamedhamedhamedhamed-eval",
@@ -24,7 +24,7 @@ class B1Test {
                         //("./src/test/resources/test1/petstore-swagger.yaml" as File).toURI().toString()
                         "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml",
                 approvalType: "auto",//mandatory
-                target: [baseUrl: "https://petstore.swagger.io/v2"]
+                target: [baseUrl: "https://petstore.swagger.io/v2"],
                 //target: [
                         /*servers: [
                                 [name: "$name", "host": "dev", "port": 8080],
@@ -33,6 +33,7 @@ class B1Test {
                         ],*/
                 //],
                 //extensions: [:]
+                headers: ["Authorization": "Basic ${"hamedhamedhamedhamed@yahoo.com:Goodday!23".bytes.encodeBase64()}"]
         ]
 
         println "opt() = ${JsonOutput.toJson(opt())}"
