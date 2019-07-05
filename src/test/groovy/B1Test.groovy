@@ -10,7 +10,7 @@ class B1Test {
         cfg.logTemplateExceptions = false
         cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
-        def name = "Swagger-Petstore-24"
+        def name = "Swagger-Petstore-33"
         def version = "v1"
 
         def options = [
@@ -27,7 +27,8 @@ class B1Test {
                 wsdlPath: //"https://svn.apache.org/repos/asf/airavata/sandbox/xbaya-web/test/Calculator.wsdl",
                     "http://www.dneonline.com/calculator.asmx?WSDL",
                 approvalType: "auto",//mandatory
-                target: [baseUrl: "https://petstore.swagger.io/v2"],
+                //target: [baseUrl: "https://petstore.swagger.io/v2"],
+                target: [baseUrl: "http://www.dneonline.com/calculator.asmx"],
                 //target: [
                         /*servers: [
                                 [name: "$name", "host": "dev", "port": 8080],
@@ -38,12 +39,12 @@ class B1Test {
                 headers: ["Authorization": "Basic ${"hamedhamedhamedhamed@yahoo.com:Goodday!23".bytes.encodeBase64()}"],
                 extensions: [
                         "x-request-id-header": [enabled: true],
-                        "spike-arrest": [enabled: true],
-                        "check-quota": [enabled: true],
+                        "spike-arrest": [enabled: false],
+                        "check-quota": [enabled: false],
                         "statistics-collector": [enabled: true],
                 ],
-                "securityModel": //"pki"//
-                     "api-key",
+                //"securityModel": //"pki"//
+                //     "api-key",
         ]
 
         println "opt() = ${JsonOutput.toJson(opt())}"

@@ -76,6 +76,9 @@ class M1 {
                     flow.request.steps << [name: "SOAP-${op.name}-JSON-To-XML"]
                     apiProxy.policies << [name: "SOAP-${op.name}-JSON-To-XML", templateName: "SOAP-JSON-To-XML", operation: op]
 
+                    flow.request.steps << [name: "SOAP-${op.name}-Remove-XML-Prologue"]
+                    apiProxy.policies << [name: "SOAP-${op.name}-Remove-XML-Prologue", templateName: "SOAP-Remove-XML-Prologue", operation: op]
+
                     flow.request.steps << [name: "SOAP-${op.name}-Request"]
                     apiProxy.policies << [name: "SOAP-${op.name}-Request", templateName: "SOAP-Request", operation: op, soapAction: soapAction, verb: "post"]
 

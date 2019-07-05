@@ -9,7 +9,7 @@
         <NamespaceSeparator>:</NamespaceSeparator>
         <TextNodeName>#text</TextNodeName>
         <AttributeBlockName>#attrs</AttributeBlockName>
-        <AttributePrefix>@</AttributePrefix>
+        <!--<AttributePrefix>@</AttributePrefix>-->
         <InvalidCharsReplacement>_</InvalidCharsReplacement>
         <ObjectRootElementName>Root</ObjectRootElementName>
         <ArrayRootElementName>Array</ArrayRootElementName>

@@ -1,3 +1,9 @@
+var apiRequest = JSON.parse(request.content)
 //TODO
-var jsonRequest = {}
+apiRequest["#namespaces"] = {
+    "$default": "${operation.input.message.getPart('parameters').elementName.namespaceURI}"
+}
+var jsonRequest = {
+    "${operation.input.message.getPart('parameters').elementName.localPart}": apiRequest
+}
 context.setVariable("${operation.name}-json-request", JSON.stringify(jsonRequest));
