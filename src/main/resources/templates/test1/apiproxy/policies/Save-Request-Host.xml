@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="Save-Request-Host">
+    <DisplayName>Save Request Host</DisplayName>
+    <Properties/>
+    <AssignVariable>
+        <Name>request-host</Name>
+        <Ref>request.header.Host</Ref>
+    </AssignVariable>
+</AssignMessage>

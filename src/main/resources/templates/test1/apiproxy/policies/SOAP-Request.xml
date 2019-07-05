@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="${name}">
+    <DisplayName>${name}</DisplayName>
+    <Properties/>
+    <Set>
+        <Verb>${verb}</Verb>
+        <Payload contentType="text/xml">
+            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="${operation.input.message.getPart('parameters').elementName.namespaceURI}">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <req:${operation.input.message.getPart('parameters').elementName.localPart}>
+                        {${operation.name}-xml-request}
+                    </req:${operation.input.message.getPart('parameters').elementName.localPart}>
+                </soapenv:Body>
+            </soapenv:Envelope>
+        </Payload>
+        <Headers>
+            <Header name="SOAPAction">${soapAction}</Header>
+        </Headers>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

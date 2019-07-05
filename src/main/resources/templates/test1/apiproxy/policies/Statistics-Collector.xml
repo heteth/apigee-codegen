@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<StatisticsCollector name="Statistics-Collector" enabled="true" continueOnError="false" async="false">
+    <DisplayName>Statistics Collector</DisplayName>
+    <Properties/>
+    <Statistics>
+		<#list statistics as s>
+        <Statistic type="${s.type}" name="${s.name}" ref="${s.ref}"/>
+		</#list>
+    </Statistics>
+</StatisticsCollector>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations async="false" continueOnError="false" enabled="true" name="KVM-Validation-Parameters" mapIdentifier="${model.name}-config">
+    <Properties/>
+    <!--Store in cache for 7 days-->
+    <ExpiryTimeInSecs>604800</ExpiryTimeInSecs>
+    <Get assignTo="validation.spikeArrestCount" index="1">
+        <Key>
+            <Parameter>spike-arrest</Parameter>
+        </Key>
+    </Get>
+    <Scope>environment</Scope>
+</KeyValueMapOperations>

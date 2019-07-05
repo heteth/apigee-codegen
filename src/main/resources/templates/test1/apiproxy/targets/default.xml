@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="${name}">
+    <Description/>
+    <FaultRules/>
+    <PreFlow name="PreFlow">
+        <Request>
+            <#list preFlow.request.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Request>
+        <Response>
+            <#list preFlow.response.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Response>
+    </PreFlow>
+    <PostFlow name="PostFlow">
+        <Request>
+            <#list postFlow.request.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Request>
+        <Response>
+            <#list postFlow.response.steps as step>
+            <Step>
+                <Name>${step.name}</Name>
+            </Step>
+            </#list>
+        </Response>
+    </PostFlow>
+    <Flows/>
+    <HTTPTargetConnection>
+        <Properties/>
+        <URL>${baseUrl}</URL>
+    </HTTPTargetConnection>
+</TargetEndpoint>

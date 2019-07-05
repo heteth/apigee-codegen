@@ -10,19 +10,22 @@ class B1Test {
         cfg.logTemplateExceptions = false
         cfg.templateExceptionHandler = TemplateExceptionHandler.IGNORE_HANDLER
 
-        def name = "Swagger-Petstore-O"
+        def name = "Swagger-Petstore-24"
+        def version = "v1"
 
         def options = [
                 org: "hamedhamedhamedhamed-eval",
                 environment: "prod",
                 virtualHosts: ["default", "secure"],
                 template: "template1",
-                name: "$name",
+                name: "${name.toLowerCase()}-$version",
                 displayName: "Proxy1",
-                basePath: "/${name.toLowerCase()}/v1",
-                swaggerPath:
+                basePath: "/${name.toLowerCase()}/$version",
+                /*swaggerPath:
                         //("./src/test/resources/test1/petstore-swagger.yaml" as File).toURI().toString()
-                        "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml",
+                        "https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml",*/
+                wsdlPath: //"https://svn.apache.org/repos/asf/airavata/sandbox/xbaya-web/test/Calculator.wsdl",
+                    "http://www.dneonline.com/calculator.asmx?WSDL",
                 approvalType: "auto",//mandatory
                 target: [baseUrl: "https://petstore.swagger.io/v2"],
                 //target: [
@@ -32,8 +35,15 @@ class B1Test {
                                 [name: "$name-prod", "host": "prod-server", "port": 443, sSLInfo: [enabled: true]],
                         ],*/
                 //],
-                //extensions: [:]
-                headers: ["Authorization": "Basic ${"hamedhamedhamedhamed@yahoo.com:Goodday!23".bytes.encodeBase64()}"]
+                headers: ["Authorization": "Basic ${"hamedhamedhamedhamed@yahoo.com:Goodday!23".bytes.encodeBase64()}"],
+                extensions: [
+                        "x-request-id-header": [enabled: true],
+                        "spike-arrest": [enabled: true],
+                        "check-quota": [enabled: true],
+                        "statistics-collector": [enabled: true],
+                ],
+                "securityModel": //"pki"//
+                     "api-key",
         ]
 
         println "opt() = ${JsonOutput.toJson(opt())}"
@@ -64,7 +74,7 @@ class B1Test {
                                 keyAlias: "keyAlias"
                         ]
                 ],
-                securityModel: "",//comes from Enum
+                securityModel: "",//comes from Enum : api-key, pki
                 approvalType: "",//comes from enum: manual, auto
                 extensions: [
                         "schema-validation": [enabled: true, otherAttribute: "value"],

@@ -38,11 +38,30 @@
         <#list flows as flow>
         <Flow name="${flow.path}">
             <Description>${util.escapeXml(flow.operation.description)}</Description>
-            <Request/>
-            <Response/>
+            <Request>
+                <#list flow.request.steps as step>
+                <Step>
+                    <Name>${step.name}</Name>
+                </Step>
+                </#list>
+            </Request>
+            <Response>
+                <#list flow.response.steps as step>
+                <Step>
+                    <Name>${step.name}</Name>
+                </Step>
+                </#list>
+            </Response>
             <Condition>(proxy.pathsuffix MatchesPath "${flow.path}") and (request.verb = "${util.toUpperCase(flow.verb)}")</Condition>
         </Flow>
         </#list>
+        <Flow name="other">
+            <Request>
+                <Step>
+                    <Name>RaiseFault.UnknownResource</Name>
+                </Step>
+            </Request>
+        </Flow>
     </Flows>
     <HTTPProxyConnection>
         <BasePath>${basePath}</BasePath>

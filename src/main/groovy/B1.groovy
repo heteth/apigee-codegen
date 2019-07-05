@@ -85,5 +85,15 @@ class B1 {
                 }
             }
         }
+
+        model.kvms.each { kvm ->
+            println "kvm = ${g.toJson(kvm)}"
+            new HTTPBuilder("https://api.enterprise.apigee.com/v1/o/${options.org}/environments/${options.environment}/keyvaluemaps").with {
+                setHeaders headers
+                request(Method.POST, ContentType.JSON) {
+                    body = g.toJson(kvm)
+                }
+            }
+        }
     }
 }

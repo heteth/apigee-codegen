@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="Save-Request-Verb">
+    <DisplayName>Save Request Verb</DisplayName>
+    <AssignVariable>
+        <Name>request-verb</Name>
+        <Ref>request.verb</Ref>
+    </AssignVariable>
+</AssignMessage>
